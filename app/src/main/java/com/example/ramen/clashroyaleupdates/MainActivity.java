@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,18 +17,40 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 public class MainActivity extends AppCompatActivity {
+
+    private TextView mTextView;
+    private ProgressBar mLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mTextView = (TextView) findViewById(R.id.tv_main);
+        mLoading = (ProgressBar) findViewById(R.id.pb_loading);
         loadData();
+
     }
 
-    public void loadData(){
-        final TextView mTextView = (TextView) findViewById(R.id.tv_main);
+    private void showLoading(){
+        mLoading.setVisibility(View.VISIBLE);
+        mTextView.setVisibility(View.INVISIBLE);
+    }
 
+    private  void showNews(){
+        mLoading.setVisibility(View.INVISIBLE);
+        mTextView.setVisibility(View.VISIBLE);
+    }
+
+    private void loadData(){
+
+        showLoading();
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="https://clashroyale.com/blog/news";
@@ -35,18 +59,30 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        mTextView.setText(response);
+                        showNews();
+                        parsePage(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                showNews();
                 mTextView.setText("That didn't work!");
             }
         });
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
+
+     private void parsePage(String page){
+        Document doc = Jsoup.parse(page);
+        Elements divs = doc.getElementsByClass("home-news-primary-item-holder");
+        for (Element div : divs){
+            Elements aTags = div.getElementsByTag("a");
+            mTextView.append(aTags.attr("href")+"\n\n\n");
+        }
+
+    };
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
