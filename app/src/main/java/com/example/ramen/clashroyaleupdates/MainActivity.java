@@ -78,7 +78,9 @@ public class MainActivity extends AppCompatActivity {
         Elements divs = doc.getElementsByClass("home-news-primary-item-holder");
         for (Element div : divs){
             Elements aTags = div.getElementsByTag("a");
-            mTextView.append(aTags.attr("href")+"\n\n\n");
+            String dataLabels = aTags.attr("data-label");
+            String news = dataLabels.substring(dataLabels.lastIndexOf("Image")+8);
+            mTextView.append(news +"\n\n\n");
         }
 
     };
