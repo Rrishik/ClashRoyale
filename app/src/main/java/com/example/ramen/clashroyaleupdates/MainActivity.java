@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData(){
-
+        mTextView.setText("");
         showLoading();
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
