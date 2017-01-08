@@ -1,8 +1,8 @@
 package com.example.ramen.clashroyaleupdates;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,12 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.ramen.clashroyaleupdates.adapter.NewsAdapter;
+import com.example.ramen.clashroyaleupdates.helper.VolleyUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String TAG = getClass().getSimpleName();
 
     private RecyclerView mRecyclerView;
     private NewsAdapter mAdapter;
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mErrorMsg = (TextView) findViewById(R.id.tv_error_msg);
         mLoading = (ProgressBar) findViewById(R.id.pb_loading);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
 
@@ -53,58 +51,56 @@ public class MainActivity extends AppCompatActivity {
         loadData();
     }
 
-    private void showLoading(){
+    private void showLoading() {
         mErrorMsg.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
         mLoading.setVisibility(View.VISIBLE);
 
     }
 
-    private  void showNews(){
+    private void showNews() {
         mLoading.setVisibility(View.INVISIBLE);
         mErrorMsg.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
 
     }
-    private void showError(){
+
+    private void showError() {
         mLoading.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
         mErrorMsg.setVisibility(View.VISIBLE);
     }
 
-    private void loadData(){
+    private void loadData() {
         mAdapter.setmNewsData(null);
         showLoading();
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://clashroyale.com/blog/news";
+        String url = "https://clashroyale.com/blog/news";
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        parsePage(response);
-                        showNews();
-                    }
-                }, new Response.ErrorListener() {
+        VolleyUtils.sendVolleyStringRequest(MainActivity.this, url, new VolleyUtils.VolleyRequestListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onResponse(String response) {
+                parsePage(response);
+                showNews();
+            }
+
+            @Override
+            public void onError(String error) {
                 showError();
                 mAdapter.setmNewsData(null);
             }
         });
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
     }
 
-    private void parsePage(String page){
+    private void parsePage(String page) {
         List<String> newsList = new ArrayList<String>();
         Document doc = Jsoup.parse(page);
         Elements divs = doc.getElementsByClass("home-news-primary-item-holder");
-        for (Element div : divs){
+        for (Element div : divs) {
             Elements aTags = div.getElementsByTag("a");
             String dataLabels = aTags.attr("data-label");
-            String news = dataLabels.substring(dataLabels.lastIndexOf("Image")+8);
+            String news = dataLabels.substring(dataLabels.lastIndexOf("Image") + 8);
+            Log.d(TAG, news);
             newsList.add(news);
         }
         String[] newsArr = new String[newsList.size()];
@@ -115,17 +111,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main,menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemClicked = item.getItemId();
-        if (itemClicked == R.id.action_refresh){
+        if (itemClicked == R.id.action_refresh) {
             Context context = MainActivity.this;
             String toastText = "Refresh";
-            Toast.makeText(context,toastText,Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
             loadData();
             return true;
         }
