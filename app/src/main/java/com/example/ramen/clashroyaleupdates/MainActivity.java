@@ -3,6 +3,9 @@ package com.example.ramen.clashroyaleupdates;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +25,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextView;
+    private RecyclerView mRecyclerView;
+    private NewsAdapter mAdapter;
+    private TextView mErrorMsg;
     private ProgressBar mLoading;
 
     @Override
@@ -32,58 +40,77 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextView = (TextView) findViewById(R.id.tv_main);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_news);
+        mErrorMsg = (TextView) findViewById(R.id.tv_error_msg);
         mLoading = (ProgressBar) findViewById(R.id.pb_loading);
-        loadData();
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+
+        mAdapter = new NewsAdapter();
+        mRecyclerView.setAdapter(mAdapter);
+        loadData();
     }
 
     private void showLoading(){
+        mErrorMsg.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
         mLoading.setVisibility(View.VISIBLE);
-        mTextView.setVisibility(View.INVISIBLE);
+
     }
 
     private  void showNews(){
         mLoading.setVisibility(View.INVISIBLE);
-        mTextView.setVisibility(View.VISIBLE);
+        mErrorMsg.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+
+    }
+    private void showError(){
+        mLoading.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        mErrorMsg.setVisibility(View.VISIBLE);
     }
 
     private void loadData(){
-        mTextView.setText("");
+        mAdapter.setmNewsData(null);
         showLoading();
-        // Instantiate the RequestQueue.
+
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="https://clashroyale.com/blog/news";
-        // Request a string response from the provided URL.
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        showNews();
                         parsePage(response);
+                        showNews();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showNews();
-                mTextView.setText("That didn't work!");
+                showError();
+                mAdapter.setmNewsData(null);
             }
         });
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 
-     private void parsePage(String page){
+    private void parsePage(String page){
+        List<String> newsList = new ArrayList<String>();
         Document doc = Jsoup.parse(page);
         Elements divs = doc.getElementsByClass("home-news-primary-item-holder");
         for (Element div : divs){
             Elements aTags = div.getElementsByTag("a");
             String dataLabels = aTags.attr("data-label");
             String news = dataLabels.substring(dataLabels.lastIndexOf("Image")+8);
-            mTextView.append(news +"\n\n\n");
+            newsList.add(news);
         }
-
-    };
+        String[] newsArr = new String[newsList.size()];
+        newsList.toArray(newsArr);
+        mAdapter.setmNewsData(newsArr);
+    }
 
 
     @Override

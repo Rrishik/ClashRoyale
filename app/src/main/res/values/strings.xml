@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Clash Royale Updates</string>
+    <string name="error_msg">Oops!! an error has occurred!</string>
 </resources>
