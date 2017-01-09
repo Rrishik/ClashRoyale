@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        mAdapter.setmNewsData(null,null);
+        mAdapter.setData(null);
         showLoading();
 
         String url = "https://clashroyale.com/blog/news";
@@ -84,14 +84,14 @@ public class MainActivity extends AppCompatActivity {
         VolleyUtils.sendVolleyStringRequest(MainActivity.this, url, new VolleyUtils.VolleyRequestListener() {
             @Override
             public void onResponse(String response) {
-                mAdapter.setmNewsData(PageParser.parsePage_news(response),PageParser.parsePage_image(response));
+                mAdapter.setData(PageParser.parsePage(response));
                 showNews();
             }
 
             @Override
             public void onError(String error) {
                 showError();
-                mAdapter.setmNewsData(null,null);
+                mAdapter.setData(null);
             }
         });
     }

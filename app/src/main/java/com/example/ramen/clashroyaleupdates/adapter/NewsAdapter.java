@@ -14,8 +14,7 @@ import com.squareup.picasso.Picasso;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterViewHolder> {
 
-    private String[] mNewsData;
-    private String[] mImageData;
+    private AdapterData[] Data;
     private Context context;
 
     public NewsAdapter(Context context){
@@ -26,11 +25,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
 
         public final TextView mNewsTextView;
         public final ImageView mImageIv;
+        public final TextView mDate;
 
         public NewsAdapterViewHolder(View view) {
             super(view);
             mNewsTextView = (TextView) view.findViewById(R.id.tv_news_data);
             mImageIv = (ImageView) view.findViewById(R.id.iv_news_image);
+            mDate = (TextView) view.findViewById(R.id.tv_date);
         }
 
     }
@@ -44,21 +45,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
 
     @Override
     public void onBindViewHolder(NewsAdapterViewHolder holder, int position) {
-        holder.mNewsTextView.setText(mNewsData[position]);
-        Picasso.with(context).load(mImageData[position]).into(holder.mImageIv);
+        holder.mNewsTextView.setText(Data[position].mNewsData);
+        Picasso.with(context).load(Data[position].mImageLink).into(holder.mImageIv);
+        holder.mDate.setText(Data[position].mDate);
     }
 
     @Override
     public int getItemCount() {
-        if (mNewsData == null)
+        if (Data == null)
             return 0;
         else
-            return mNewsData.length;
+            return Data.length;
     }
 
-    public void setmNewsData(String[] mNewsData,String[] mImageData) {
-        this.mNewsData = mNewsData;
-        this.mImageData = mImageData;
+    public void setData(AdapterData[] adapterData) {
+        this.Data = adapterData;
         notifyDataSetChanged();
     }
 }

@@ -4,7 +4,6 @@
     android:layout_height="wrap_content" >
 
     <ImageView
-
         android:id="@+id/iv_news_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,13 +19,26 @@
         android:layout_toRightOf="@+id/iv_news_image"
         android:padding="16dp"
         android:text="Dummy Elixir Content"
+        android:gravity="center_vertical"
         android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_alignBottom="@+id/tv_news_data"
+        android:layout_alignTop="@+id/tv_news_data"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="4sp"
+        android:layout_marginRight="4sp"
+        android:textAlignment="inherit"
+        android:gravity="bottom"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:background="#dadada" />
+        android:background="#baba" />
 
 </RelativeLayout>
