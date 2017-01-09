@@ -14,9 +14,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
 
-/**
- * Created by gopi.ra on 15-Nov-16.
- */
 
 public class VolleyUtils {
 
