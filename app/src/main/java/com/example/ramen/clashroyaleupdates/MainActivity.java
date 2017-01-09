@@ -3,6 +3,7 @@ package com.example.ramen.clashroyaleupdates;
 import android.content.Context;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private NewsAdapter mAdapter;
     private TextView mErrorMsg;
-    private ProgressBar mLoading;
-    private ImageView mNewsImage;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_news);
         mErrorMsg = (TextView) findViewById(R.id.tv_error_msg);
-        mLoading = (ProgressBar) findViewById(R.id.pb_loading);
-        mNewsImage = (ImageView) findViewById(R.id.iv_news_image);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_refresh);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -53,31 +53,29 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new NewsAdapter(getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
         loadData();
-    }
 
-    private void showLoading() {
-        mErrorMsg.setVisibility(View.INVISIBLE);
-        mRecyclerView.setVisibility(View.INVISIBLE);
-        mLoading.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+            }
+        });
 
     }
 
     private void showNews() {
-        mLoading.setVisibility(View.INVISIBLE);
         mErrorMsg.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
 
     }
 
     private void showError() {
-        mLoading.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
         mErrorMsg.setVisibility(View.VISIBLE);
     }
 
     private void loadData() {
         mAdapter.setData(null);
-        showLoading();
 
         String url = "https://clashroyale.com/blog/news";
 
@@ -85,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 mAdapter.setData(PageParser.parsePage(response));
+                mSwipeRefreshLayout.setRefreshing(false);
                 showNews();
             }
 
