@@ -1,32 +1,18 @@
 package com.example.ramen.clashroyaleupdates;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ramen.clashroyaleupdates.adapter.NewsAdapter;
 import com.example.ramen.clashroyaleupdates.helper.PageParser;
 import com.example.ramen.clashroyaleupdates.helper.VolleyUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        mAdapter.setData(null);
+        //mAdapter.setData(null);
 
         String url = "https://clashroyale.com/blog/news";
 
@@ -91,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             public void onError(String error) {
                 showError();
                 mAdapter.setData(null);
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }

@@ -17,7 +17,6 @@ import java.util.List;
 
 public class PageParser {
 
-
     public static AdapterData[] parsePage(String page) {
         List<AdapterData> newsList = new ArrayList<AdapterData>();
         Document doc = Jsoup.parse(page);
@@ -29,7 +28,7 @@ public class PageParser {
             String imgLinks = srcTags.attr("data-srcset");
             String news = dataLabels.substring(dataLabels.lastIndexOf("Image") + 8);
             String date = div.getElementsByClass("home-news-primary-item-date").text();
-            AdapterData data = new AdapterData(news,imgLinks,date);
+            AdapterData data = new AdapterData(news, imgLinks, date);
             newsList.add(data);
         }
         AdapterData[] newsArr = new AdapterData[newsList.size()];

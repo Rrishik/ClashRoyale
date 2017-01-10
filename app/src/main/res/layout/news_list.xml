@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="65dp">
 
     <ImageView
         android:id="@+id/iv_news_image"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_placeholder" />
 
     <TextView
         android:id="@+id/tv_news_data"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/iv_news_image"
-        android:layout_alignTop="@+id/iv_news_image"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/iv_news_image"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
         android:padding="16dp"
         android:text="Dummy Elixir Content"
-        android:gravity="center_vertical"
         android:textSize="22sp" />
 
     <TextView
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_alignBottom="@+id/tv_news_data"
-        android:layout_alignTop="@+id/tv_news_data"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="4sp"
         android:layout_marginRight="4sp"
-        android:textAlignment="inherit"
-        android:gravity="bottom"/>
+        android:text="Dec 12, 2014"
+        android:textSize="12sp"
+        android:textStyle="italic" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="4dp"
         android:background="#baba" />
 
 </RelativeLayout>

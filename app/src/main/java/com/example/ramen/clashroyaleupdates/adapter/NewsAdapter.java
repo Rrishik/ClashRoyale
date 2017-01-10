@@ -10,14 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ramen.clashroyaleupdates.R;
-import com.squareup.picasso.Picasso;
+import com.example.ramen.clashroyaleupdates.helper.Util;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterViewHolder> {
 
     private AdapterData[] Data;
     private Context context;
 
-    public NewsAdapter(Context context){
+    public NewsAdapter(Context context) {
         this.context = context;
     }
 
@@ -46,8 +46,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
     @Override
     public void onBindViewHolder(NewsAdapterViewHolder holder, int position) {
         holder.mNewsTextView.setText(Data[position].mNewsData);
-        Picasso.with(context).load(Data[position].mImageLink).into(holder.mImageIv);
-        holder.mDate.setText(Data[position].mDate);
+        Util.loadImageByPicasso(context, holder.mImageIv, Data[position].mImageLink);
+        holder.mDate.setText(Util.reformatDate(Data[position].mDate));
     }
 
     @Override
