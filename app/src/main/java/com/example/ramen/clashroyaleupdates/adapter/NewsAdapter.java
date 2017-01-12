@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.example.ramen.clashroyaleupdates.R;
 import com.example.ramen.clashroyaleupdates.helper.Util;
 
+import java.util.ArrayList;
+
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterViewHolder> {
 
-    private AdapterData[] Data;
+    private ArrayList<AdapterData> Data;
     private Context context;
 
     public NewsAdapter(Context context) {
@@ -45,21 +47,20 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
 
     @Override
     public void onBindViewHolder(NewsAdapterViewHolder holder, int position) {
-        holder.mNewsTextView.setText(Data[position].mNewsData);
-        Util.loadImageByPicasso(context, holder.mImageIv, Data[position].mImageLink);
-        holder.mDate.setText(Util.reformatDate(Data[position].mDate));
+        holder.mNewsTextView.setText(Data.get(position).mNewsData);
+        Util.loadImageByPicasso(context, holder.mImageIv, Data.get(position).mImageLink);
+        holder.mDate.setText(Util.reformatDate(Data.get(position).mDate));
     }
 
     @Override
     public int getItemCount() {
         if (Data == null)
             return 0;
-        else
-            return Data.length;
+        return Data.size();
     }
 
-    public void setData(AdapterData[] adapterData) {
-        this.Data = adapterData;
+    public void setData(ArrayList<AdapterData> adapterData) {
+        Data =(ArrayList<AdapterData>) adapterData.clone();
         notifyDataSetChanged();
     }
 }

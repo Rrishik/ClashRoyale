@@ -10,9 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.ramen.clashroyaleupdates.adapter.AdapterData;
 import com.example.ramen.clashroyaleupdates.adapter.NewsAdapter;
 import com.example.ramen.clashroyaleupdates.helper.PageParser;
 import com.example.ramen.clashroyaleupdates.helper.VolleyUtils;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,7 +71,9 @@ public class MainActivity extends AppCompatActivity {
         VolleyUtils.sendVolleyStringRequest(MainActivity.this, url, new VolleyUtils.VolleyRequestListener() {
             @Override
             public void onResponse(String response) {
-                mAdapter.setData(PageParser.parsePage(response));
+                PageParser pageParser = new PageParser();
+                ArrayList<AdapterData> pageData = pageParser.parsePage(response);
+                mAdapter.setData(pageData);
                 mSwipeRefreshLayout.setRefreshing(false);
                 showNews();
             }

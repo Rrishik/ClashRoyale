@@ -17,8 +17,8 @@ import java.util.List;
 
 public class PageParser {
 
-    public static AdapterData[] parsePage(String page) {
-        List<AdapterData> newsList = new ArrayList<AdapterData>();
+    public ArrayList<AdapterData> parsePage(String page) {
+        ArrayList<AdapterData> newsList = new ArrayList<AdapterData>();
         Document doc = Jsoup.parse(page);
         Elements divs = doc.getElementsByClass("home-news-primary-item-holder");
         for (Element div : divs) {
@@ -31,9 +31,9 @@ public class PageParser {
             AdapterData data = new AdapterData(news, imgLinks, date);
             newsList.add(data);
         }
-        AdapterData[] newsArr = new AdapterData[newsList.size()];
-        newsList.toArray(newsArr);
-        return newsArr;
+//        AdapterData[] newsArr = new AdapterData[newsList.size()];
+//        newsList.toArray(newsArr);
+        return newsList;
     }
 
 }
