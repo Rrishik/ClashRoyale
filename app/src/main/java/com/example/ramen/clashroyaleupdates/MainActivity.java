@@ -15,7 +15,7 @@ import com.example.ramen.clashroyaleupdates.adapter.NewsAdapter;
 import com.example.ramen.clashroyaleupdates.helper.PageParser;
 import com.example.ramen.clashroyaleupdates.helper.VolleyUtils;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     private void showNews() {
         mErrorMsg.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
-
     }
 
     private void showError() {
@@ -64,15 +63,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        //mAdapter.setData(null);
+        // TODO This function content would be like this:
+        /*
+        PageParser p = new Parser(MainActivity.this, url, new PageParseListener() {
+            public void onResponse() {
+                // call p.getPageData and assign to adapter
+            }
+            public void onError() {
+                // call error handling code
+            }
+        });
+         */
 
-        String url = "https://clashroyale.com/blog/news";
+        final String url = "https://clashroyale.com/blog/news";
 
         VolleyUtils.sendVolleyStringRequest(MainActivity.this, url, new VolleyUtils.VolleyRequestListener() {
             @Override
             public void onResponse(String response) {
-                PageParser pageParser = new PageParser();
-                ArrayList<AdapterData> pageData = pageParser.parsePage(response);
+                PageParser pageParser = new PageParser(MainActivity.this, url);
+                List<AdapterData> pageData = pageParser.getPageData(response);
                 mAdapter.setData(pageData);
                 mSwipeRefreshLayout.setRefreshing(false);
                 showNews();

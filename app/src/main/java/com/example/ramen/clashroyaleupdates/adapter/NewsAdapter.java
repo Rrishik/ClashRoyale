@@ -13,14 +13,16 @@ import com.example.ramen.clashroyaleupdates.R;
 import com.example.ramen.clashroyaleupdates.helper.Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterViewHolder> {
 
-    private ArrayList<AdapterData> Data;
-    private Context context;
+    private List<AdapterData> mDataset;
+    private Context mContext;
 
     public NewsAdapter(Context context) {
-        this.context = context;
+        mContext = context;
+        mDataset = new ArrayList<>();
     }
 
     public class NewsAdapterViewHolder extends RecyclerView.ViewHolder {
@@ -47,20 +49,26 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
 
     @Override
     public void onBindViewHolder(NewsAdapterViewHolder holder, int position) {
-        holder.mNewsTextView.setText(Data.get(position).mNewsData);
-        Util.loadImageByPicasso(context, holder.mImageIv, Data.get(position).mImageLink);
-        holder.mDate.setText(Util.reformatDate(Data.get(position).mDate));
+        holder.mNewsTextView.setText(mDataset.get(position).mNewsData);
+        Util.loadImageByPicasso(mContext, holder.mImageIv, mDataset.get(position).mImageLink);
+        holder.mDate.setText(Util.reformatDate(mDataset.get(position).mDate));
     }
 
     @Override
     public int getItemCount() {
-        if (Data == null)
+        if (mDataset == null)
             return 0;
-        return Data.size();
+        return mDataset.size();
     }
 
-    public void setData(ArrayList<AdapterData> adapterData) {
-        Data =(ArrayList<AdapterData>) adapterData.clone();
+    public void clear() {
+        mDataset.clear();
+        notifyDataSetChanged();
+    }
+
+    public void setData(List<AdapterData> adapterData) {
+        mDataset.clear();
+        mDataset.addAll(adapterData);
         notifyDataSetChanged();
     }
 }
