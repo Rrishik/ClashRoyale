@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.example.ramen.clashroyaleupdates.adapter.AdapterData;
 import com.example.ramen.clashroyaleupdates.adapter.NewsAdapter;
 import com.example.ramen.clashroyaleupdates.helper.PageParser;
-import com.example.ramen.clashroyaleupdates.helper.VolleyUtils;
 
 import java.util.List;
 
@@ -65,48 +64,39 @@ public class MainActivity extends AppCompatActivity {
     private void loadData() {
 
         final String url = "https://clashroyale.com/blog/news";
-        // TODO This function content would be like this:
 
-        final PageParser p = new PageParser(MainActivity.this, url, new PageParser.PageParseListener() {
+        PageParser p = new PageParser(MainActivity.this, url, new PageParser.PageParseListener() {
             @Override
-            public void onResponse(String response) {
-
-                mAdapter.setData(p.getPageData());
-            }
-
-            @Override
-            public void onError(String error) {
-                showError();
-                mAdapter.setData(null);
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
-//        } {
-//            public void onResponse() {
-//                // call p.getPageData and assign to adapter
-//            }
-//            public void onError() {
-//                // call error handling code
-//            }
-//        });
-
-
-
-        VolleyUtils.sendVolleyStringRequest(MainActivity.this, url, new VolleyUtils.VolleyRequestListener() {
-            @Override
-            public void onResponse(String response) {
-                PageParser pageParser = new PageParser(MainActivity.this, url);
-                List<AdapterData> pageData = pageParser.getPageData(response);
-                mAdapter.setData(pageParser.getPageData());
+            public void onResponse(List<AdapterData> dataList) {
+                mAdapter.setData(dataList);
                 mSwipeRefreshLayout.setRefreshing(false);
                 showNews();
             }
 
             @Override
             public void onError(String error) {
-
+                showError();
+                mAdapter.clear();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
+
+
+//        VolleyUtils.sendVolleyStringRequest(MainActivity.this, url, new VolleyUtils.VolleyRequestListener() {
+//            @Override
+//            public void onResponse(String response) {
+//                PageParser pageParser = new PageParser(MainActivity.this, url);
+//                List<AdapterData> pageData = pageParser.getPageData(response);
+//                mAdapter.setData(pageParser.getPageData());
+//                mSwipeRefreshLayout.setRefreshing(false);
+//                showNews();
+//            }
+//
+//            @Override
+//            public void onError(String error) {
+//
+//            }
+//        });
     }
 
 
