@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemClicked = item.getItemId();
         if (itemClicked == R.id.action_refresh) {
+            mSwipeRefreshLayout.setRefreshing(true);
             loadData();
             return true;
         }

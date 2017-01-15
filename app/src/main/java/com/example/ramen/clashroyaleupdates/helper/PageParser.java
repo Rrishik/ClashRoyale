@@ -13,9 +13,6 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by risk on 09-01-2017.
- */
 
 public class PageParser {
 
@@ -53,6 +50,8 @@ public class PageParser {
 
                 if (listener != null)
                     listener.onError(error);
+                else
+                    listener.onError("Network Error (Null Specified)");
             }
         });
     }
