@@ -1,6 +1,5 @@
 package com.example.ramen.clashroyaleupdates;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -37,13 +36,13 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_news);
         mErrorMsg = (TextView) findViewById(R.id.tv_error_msg);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_refresh);
-        mWebPage = (WebView) findViewById((R.id.wv_page));
+        mWebPage = (WebView) findViewById(R.id.wv_page);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new NewsAdapter(getApplicationContext(), this);
+        mAdapter = new NewsAdapter(MainActivity.this, this);
         mRecyclerView.setAdapter(mAdapter);
         loadData();
 
@@ -53,16 +52,18 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
                 loadData();
             }
         });
-
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     private void showNews() {
-        mErrorMsg.setVisibility(View.INVISIBLE);
+        mErrorMsg.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void showError() {
-        mRecyclerView.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.GONE);
         mErrorMsg.setVisibility(View.VISIBLE);
     }
 
@@ -106,7 +107,8 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
 
     @Override
     public void onClickListener(String link) {
-        Context context = MainActivity.this;
-        Util.openInBrowser(link, context);
+        //Util.openInBrowser(link, MainActivity.this);
+        mWebPage.setVisibility(View.VISIBLE);
+        Util.openInWebView(mWebPage, link);
     }
 }
