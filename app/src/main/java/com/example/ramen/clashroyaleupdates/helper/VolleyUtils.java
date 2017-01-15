@@ -64,7 +64,7 @@ public class VolleyUtils {
 
     /************************************************************
      * FUNCTIONS BELOW THIS ARE UNUSED
-      ***********************************************************/
+     ***********************************************************/
 
     public static void sendVolleyJsonRequest(final Context context, String url, int method, final Map<String,
             String> params, int timeout, int numRetries, final VolleyRequestListener listener) {
