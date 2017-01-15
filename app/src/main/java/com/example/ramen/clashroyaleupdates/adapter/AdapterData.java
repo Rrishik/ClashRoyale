@@ -1,20 +1,18 @@
 package com.example.ramen.clashroyaleupdates.adapter;
 
 
-/**
- * Created by ramen on 09-01-2017.
- */
-
 public class AdapterData {
 
-    public String mNewsData;
-    public String mImageLink;
-    public String mDate;
+    String mNewsData;
+    String mImageLink;
+    String mDate;
+    String mLink;
 
-    public AdapterData(String mNewsData, String mImageLink, String mDate) {
+    public AdapterData(String mNewsData, String mImageLink, String mDate, String mLink) {
         this.mNewsData = mNewsData;
         this.mImageLink = mImageLink;
         this.mDate = mDate;
+        this.mLink = mLink;
     }
 
 }

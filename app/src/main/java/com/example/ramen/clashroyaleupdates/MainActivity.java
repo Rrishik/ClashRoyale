@@ -1,5 +1,6 @@
 package com.example.ramen.clashroyaleupdates;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,15 +9,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.ramen.clashroyaleupdates.adapter.AdapterData;
 import com.example.ramen.clashroyaleupdates.adapter.NewsAdapter;
 import com.example.ramen.clashroyaleupdates.helper.PageParser;
+import com.example.ramen.clashroyaleupdates.helper.Util;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NewsAdapter.RecyclerViewClickListener {
 
     private String TAG = getClass().getSimpleName();
 
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private NewsAdapter mAdapter;
     private TextView mErrorMsg;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private WebView mWebPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +37,13 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_news);
         mErrorMsg = (TextView) findViewById(R.id.tv_error_msg);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_refresh);
+        mWebPage = (WebView) findViewById((R.id.wv_page));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new NewsAdapter(getApplicationContext());
+        mAdapter = new NewsAdapter(getApplicationContext(), this);
         mRecyclerView.setAdapter(mAdapter);
         loadData();
 
@@ -80,25 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-
-
-//        VolleyUtils.sendVolleyStringRequest(MainActivity.this, url, new VolleyUtils.VolleyRequestListener() {
-//            @Override
-//            public void onResponse(String response) {
-//                PageParser pageParser = new PageParser(MainActivity.this, url);
-//                List<AdapterData> pageData = pageParser.getPageData(response);
-//                mAdapter.setData(pageParser.getPageData());
-//                mSwipeRefreshLayout.setRefreshing(false);
-//                showNews();
-//            }
-//
-//            @Override
-//            public void onError(String error) {
-//
-//            }
-//        });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,5 +102,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClickListener(String link) {
+        Context context = MainActivity.this;
+        Util.openInBrowser(link, context);
     }
 }

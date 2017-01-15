@@ -25,6 +25,11 @@
             android:textSize="20sp"
             android:visibility="invisible" />
 
+        <WebView
+            android:id="@+id/wv_page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></WebView>
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

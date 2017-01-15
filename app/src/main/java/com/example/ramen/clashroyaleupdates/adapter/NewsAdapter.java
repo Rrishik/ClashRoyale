@@ -19,26 +19,41 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
 
     private List<AdapterData> mDataset;
     private Context mContext;
+    private final RecyclerViewClickListener mOnclickListener;
 
-    public NewsAdapter(Context context) {
+    public NewsAdapter(Context context, RecyclerViewClickListener listener) {
+
+        mOnclickListener = listener;
         mContext = context;
         mDataset = new ArrayList<>();
     }
 
-    public class NewsAdapterViewHolder extends RecyclerView.ViewHolder {
+    public interface RecyclerViewClickListener {
+        void onClickListener(String link);
+    }
 
-        public final TextView mNewsTextView;
-        public final ImageView mImageIv;
-        public final TextView mDate;
 
-        public NewsAdapterViewHolder(View view) {
+    class NewsAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        final TextView mNewsTextView;
+        final ImageView mImageIv;
+        final TextView mDate;
+
+        NewsAdapterViewHolder(View view) {
             super(view);
             mNewsTextView = (TextView) view.findViewById(R.id.tv_news_data);
             mImageIv = (ImageView) view.findViewById(R.id.iv_news_image);
             mDate = (TextView) view.findViewById(R.id.tv_date);
+            view.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+            String link = mDataset.get(getAdapterPosition()).mLink;
+            mOnclickListener.onClickListener(link);
+        }
     }
+
 
     @Override
     public NewsAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {

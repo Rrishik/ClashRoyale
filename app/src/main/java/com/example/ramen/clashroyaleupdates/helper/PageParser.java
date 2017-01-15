@@ -18,6 +18,7 @@ public class PageParser {
 
     private Context mContext;
     private Document mDocument;
+    private Elements divs;
 
     public interface PageParseListener {
 
@@ -61,15 +62,16 @@ public class PageParser {
         // TODO do not forget null checks
 
         List<AdapterData> newsList = new ArrayList<>();
-        Elements divs = mDocument.getElementsByClass("home-news-primary-item-holder");
+        divs = mDocument.getElementsByClass("home-news-primary-item-holder");
         for (Element div : divs) {
             Elements aTags = div.getElementsByTag("a");
             String dataLabels = aTags.attr("data-label");
             Elements srcTags = div.getElementsByTag("source");
             String imgLinks = srcTags.attr("data-srcset");
+            String links = aTags.attr("href");
             String news = dataLabels.substring(dataLabels.lastIndexOf("Image") + 8);
             String date = div.getElementsByClass("home-news-primary-item-date").text();
-            AdapterData data = new AdapterData(news, imgLinks, date);
+            AdapterData data = new AdapterData(news, imgLinks, date, links);
             newsList.add(data);
         }
 //        AdapterData[] newsArr = new AdapterData[newsList.size()];
