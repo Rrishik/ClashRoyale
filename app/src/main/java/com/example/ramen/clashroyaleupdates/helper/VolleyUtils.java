@@ -52,8 +52,7 @@ public class VolleyUtils {
                                 listener.onError("Network Error (Null Specified)");
                         }
                     }
-                }) {
-        };
+                });
 
         Log.d("MyVolley", "sending volley req to " + url);
         volleyRequest.setRetryPolicy(new DefaultRetryPolicy(

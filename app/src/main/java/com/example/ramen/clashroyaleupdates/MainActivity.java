@@ -63,28 +63,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        // TODO This function content would be like this:
-        /*
-        PageParser p = new Parser(MainActivity.this, url, new PageParseListener() {
-            public void onResponse() {
-                // call p.getPageData and assign to adapter
-            }
-            public void onError() {
-                // call error handling code
-            }
-        });
-         */
 
         final String url = "https://clashroyale.com/blog/news";
+        // TODO This function content would be like this:
 
-        VolleyUtils.sendVolleyStringRequest(MainActivity.this, url, new VolleyUtils.VolleyRequestListener() {
+        final PageParser p = new PageParser(MainActivity.this, url, new PageParser.PageParseListener() {
             @Override
             public void onResponse(String response) {
-                PageParser pageParser = new PageParser(MainActivity.this, url);
-                List<AdapterData> pageData = pageParser.getPageData(response);
-                mAdapter.setData(pageData);
-                mSwipeRefreshLayout.setRefreshing(false);
-                showNews();
+
+                mAdapter.setData(p.getPageData());
             }
 
             @Override
@@ -92,6 +79,32 @@ public class MainActivity extends AppCompatActivity {
                 showError();
                 mAdapter.setData(null);
                 mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+//        } {
+//            public void onResponse() {
+//                // call p.getPageData and assign to adapter
+//            }
+//            public void onError() {
+//                // call error handling code
+//            }
+//        });
+
+
+
+        VolleyUtils.sendVolleyStringRequest(MainActivity.this, url, new VolleyUtils.VolleyRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                PageParser pageParser = new PageParser(MainActivity.this, url);
+                List<AdapterData> pageData = pageParser.getPageData(response);
+                mAdapter.setData(pageParser.getPageData());
+                mSwipeRefreshLayout.setRefreshing(false);
+                showNews();
+            }
+
+            @Override
+            public void onError(String error) {
+
             }
         });
     }

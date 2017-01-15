@@ -61,9 +61,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsAdapterVie
         return mDataset.size();
     }
 
-    public void clear() {
+    public void clear(){
         mDataset.clear();
-        notifyDataSetChanged();
     }
 
     public void setData(List<AdapterData> adapterData) {
