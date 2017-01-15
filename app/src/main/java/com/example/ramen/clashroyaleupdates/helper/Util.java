@@ -26,7 +26,6 @@ public class Util {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         mWebPage.setWebViewClient(new WebViewClient());
-        //Log.d(TAG, "openInWebView: ");
         mWebPage.postDelayed(new Runnable() {
             @Override
             public void run() {
