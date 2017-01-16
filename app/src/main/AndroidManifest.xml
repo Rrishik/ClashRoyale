@@ -18,8 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WebViewActivity"
-            android:label="web view">
+            android:name=".WebViewActivity">
         </activity>
     </application>
 
