@@ -1,5 +1,6 @@
 package com.example.ramen.clashroyaleupdates;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,15 +9,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.ramen.clashroyaleupdates.adapter.AdapterData;
 import com.example.ramen.clashroyaleupdates.adapter.NewsAdapter;
 import com.example.ramen.clashroyaleupdates.helper.PageParser;
-import com.example.ramen.clashroyaleupdates.helper.Util;
 
 import java.util.List;
+
+import static android.content.Intent.EXTRA_TEXT;
+
 
 public class MainActivity extends AppCompatActivity implements NewsAdapter.RecyclerViewClickListener {
 
@@ -26,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
     private NewsAdapter mAdapter;
     private TextView mErrorMsg;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private WebView mWebPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_news);
         mErrorMsg = (TextView) findViewById(R.id.tv_error_msg);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_refresh);
-        mWebPage = (WebView) findViewById(R.id.wv_page);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -107,8 +107,10 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
 
     @Override
     public void onClickListener(String link) {
-        //Util.openInBrowser(link, MainActivity.this);
-        mWebPage.setVisibility(View.VISIBLE);
-        Util.openInWebView(mWebPage, link);
+
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.setType("text/plain");
+        intent.putExtra(EXTRA_TEXT, link);
+        startActivity(intent);
     }
 }
