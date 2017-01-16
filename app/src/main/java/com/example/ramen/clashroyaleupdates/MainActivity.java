@@ -107,7 +107,8 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
 
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.setType("text/plain");
-        intent.putExtra(EXTRA_TEXT, link);
+        intent.putExtra("link", link);
+//        intent.putExtra("text",)
         startActivity(intent);
     }
 }

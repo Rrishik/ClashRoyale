@@ -22,17 +22,17 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_page);
         mWebPage = (WebView) findViewById(R.id.wv_page);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        if (toolbar != null){
-            setSupportActionBar(toolbar);
-        }
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//
+//        if (toolbar != null){
+//            setSupportActionBar(toolbar);
+//        }
 
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             return;
         }
-        link = extras.getString(Intent.EXTRA_TEXT);
+        link = extras.getString("link");
         Util.openInWebView(mWebPage, link);
     }
 
