@@ -13,12 +13,10 @@ import android.widget.TextView;
 
 import com.example.ramen.clashroyaleupdates.adapter.AdapterData;
 import com.example.ramen.clashroyaleupdates.adapter.NewsAdapter;
+import com.example.ramen.clashroyaleupdates.helper.Constants;
 import com.example.ramen.clashroyaleupdates.helper.PageParser;
 
 import java.util.List;
-
-import static android.content.Intent.EXTRA_TEXT;
-
 
 public class MainActivity extends AppCompatActivity implements NewsAdapter.RecyclerViewClickListener {
 
@@ -107,11 +105,8 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
 
     @Override
     public void onClickListener(String link) {
-
         Intent intent = new Intent(this, WebViewActivity.class);
-        intent.setType("text/plain");
-        intent.putExtra("link", link);
-//        intent.putExtra("text",)
+        intent.putExtra(Constants.Intent.SELECTED_LINK, link);
         startActivity(intent);
     }
 }
