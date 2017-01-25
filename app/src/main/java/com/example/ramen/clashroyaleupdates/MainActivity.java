@@ -1,6 +1,5 @@
 package com.example.ramen.clashroyaleupdates;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +12,17 @@ import android.widget.TextView;
 
 import com.example.ramen.clashroyaleupdates.adapter.AdapterData;
 import com.example.ramen.clashroyaleupdates.adapter.NewsAdapter;
-import com.example.ramen.clashroyaleupdates.helper.Constants;
 import com.example.ramen.clashroyaleupdates.helper.PageParser;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import java.util.List;
+
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.DKGRAY;
+import static android.graphics.Color.GRAY;
+import static android.graphics.Color.LTGRAY;
+import static android.graphics.Color.WHITE;
+import static android.graphics.Color.rgb;
 
 public class MainActivity extends AppCompatActivity implements NewsAdapter.RecyclerViewClickListener {
 
@@ -105,8 +111,29 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
 
     @Override
     public void onClickListener(String link) {
-        Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra(Constants.Intent.SELECTED_LINK, link);
-        startActivity(intent);
+        //FinestWebView.Builder();
+        //Intent intent = new Intent(this, WebViewActivity.class);
+        //intent.putExtra(Constants.Intent.SELECTED_LINK, link);
+        int[] colors = {BLACK, DKGRAY, LTGRAY};
+        //startActivity(intent);
+        new FinestWebView.Builder(this)
+                .updateTitleFromHtml(true)
+                .titleColor(WHITE)
+                .toolbarColor(rgb(0, 50, 150))
+                .iconDefaultColor(WHITE)
+                .iconPressedColor(GRAY)
+                .showIconClose(true)
+                .showIconMenu(true)
+                .showSwipeRefreshLayout(false)
+                .swipeRefreshColors(colors)
+                .showProgressBar(true)
+                .progressBarColor(LTGRAY)
+                .showUrl(true)
+                .urlColor(rgb(240, 240, 240))
+                .backPressToClose(true)
+                .menuColorRes(R.color.grey_percent_95)
+                .menuTextSize(30)
+                .setCustomAnimations(R.anim.activity_open_enter, R.anim.activity_open_exit, R.anim.activity_close_enter, R.anim.activity_close_exit)
+                .show(link);
     }
 }

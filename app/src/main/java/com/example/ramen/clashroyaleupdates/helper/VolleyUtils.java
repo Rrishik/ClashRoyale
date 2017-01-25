@@ -188,7 +188,7 @@ public class VolleyUtils {
         MyVolley.getInstance(context).addToRequestQueue(volleyRequest);
     }
 
-    public static void sendVolleyPostBodyRequest(final Context context, String url, final String httpPostBody, final VolleyRequestListener listener) {
+    public static void sendVolleyPostBodyRequest(final Context context, String url, final Map<String,String> headers, final String httpPostBody, final VolleyRequestListener listener) {
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -221,7 +221,13 @@ public class VolleyUtils {
             public byte[] getBody() throws AuthFailureError {
                 return httpPostBody.getBytes();
             }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return headers;
+            }
         };
+
 
         Log.d("My Volley", httpPostBody);
         Log.d("MyVolley", "sending volley req to " + url);
