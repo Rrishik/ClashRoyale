@@ -1,4 +1,4 @@
-package com.risk.clashroyaleupdates;
+package com.risk.crupdates;
 
 import org.junit.Test;
 

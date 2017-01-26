@@ -1,4 +1,4 @@
-package com.risk.clashroyaleupdates.helper;
+package com.risk.crupdates.helper;
 
 /**
  * Created by Gopi on 17-01-2017.

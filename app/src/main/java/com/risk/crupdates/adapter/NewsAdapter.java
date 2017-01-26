@@ -1,4 +1,4 @@
-package com.risk.clashroyaleupdates.adapter;
+package com.risk.crupdates.adapter;
 
 
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.risk.clashroyaleupdates.R;
-import com.risk.clashroyaleupdates.helper.Util;
+import com.risk.crupdates.R;
+import com.risk.crupdates.helper.Util;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.risk.clashroyaleupdates.helper;
+package com.risk.crupdates.helper;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
-import com.risk.clashroyaleupdates.R;
+import com.risk.crupdates.R;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;

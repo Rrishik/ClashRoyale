@@ -1,4 +1,4 @@
-package com.risk.clashroyaleupdates;
+package com.risk.crupdates;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,9 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.risk.clashroyaleupdates.adapter.AdapterData;
-import com.risk.clashroyaleupdates.adapter.NewsAdapter;
-import com.risk.clashroyaleupdates.helper.PageParser;
+import com.risk.crupdates.adapter.AdapterData;
+import com.risk.crupdates.adapter.NewsAdapter;
+import com.risk.crupdates.helper.PageParser;
 import com.thefinestartist.finestwebview.FinestWebView;
 
 import java.util.List;
@@ -36,11 +36,11 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(com.risk.crupdates.R.layout.activity_main);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_news);
-        mErrorMsg = (TextView) findViewById(R.id.tv_error_msg);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_refresh);
+        mRecyclerView = (RecyclerView) findViewById(com.risk.crupdates.R.id.rv_news);
+        mErrorMsg = (TextView) findViewById(com.risk.crupdates.R.id.tv_error_msg);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(com.risk.crupdates.R.id.srl_refresh);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
                 loadData();
             }
         });
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, android.R.color.holo_blue_bright,
+        mSwipeRefreshLayout.setColorSchemeResources(com.risk.crupdates.R.color.colorAccent, android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light, android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
     }
@@ -94,14 +94,14 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(com.risk.crupdates.R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemClicked = item.getItemId();
-        if (itemClicked == R.id.action_refresh) {
+        if (itemClicked == com.risk.crupdates.R.id.action_refresh) {
             mSwipeRefreshLayout.setRefreshing(true);
             loadData();
             return true;
@@ -131,9 +131,9 @@ public class MainActivity extends AppCompatActivity implements NewsAdapter.Recyc
                 .showUrl(true)
                 .urlColor(rgb(240, 240, 240))
                 .backPressToClose(true)
-                .menuColorRes(R.color.grey_percent_95)
+                .menuColorRes(com.risk.crupdates.R.color.grey_percent_95)
                 .menuTextSize(30)
-                .setCustomAnimations(R.anim.activity_open_enter, R.anim.activity_open_exit, R.anim.activity_close_enter, R.anim.activity_close_exit)
+                .setCustomAnimations(com.risk.crupdates.R.anim.activity_open_enter, com.risk.crupdates.R.anim.activity_open_exit, com.risk.crupdates.R.anim.activity_close_enter, com.risk.crupdates.R.anim.activity_close_exit)
                 .show(link);
     }
 }

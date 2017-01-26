@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.risk.clashroyaleupdates.MainActivity">
+    tools:context="com.risk.crupdates.MainActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl_refresh"

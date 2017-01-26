@@ -1,9 +1,9 @@
-package com.risk.clashroyaleupdates.helper;
+package com.risk.crupdates.helper;
 
 
 import android.content.Context;
 
-import com.risk.clashroyaleupdates.adapter.AdapterData;
+import com.risk.crupdates.adapter.AdapterData;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -1,4 +1,4 @@
-package com.risk.clashroyaleupdates.adapter;
+package com.risk.crupdates.adapter;
 
 
 public class AdapterData {

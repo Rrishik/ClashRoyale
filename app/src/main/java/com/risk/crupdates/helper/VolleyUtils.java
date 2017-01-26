@@ -1,4 +1,4 @@
-package com.risk.clashroyaleupdates.helper;
+package com.risk.crupdates.helper;
 
 import android.content.Context;
 import android.util.Log;

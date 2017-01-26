@@ -1,4 +1,4 @@
-package com.risk.clashroyaleupdates;
+package com.risk.crupdates;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
